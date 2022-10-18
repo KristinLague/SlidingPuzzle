@@ -6,23 +6,75 @@
 }
 
 .puzzle--container {
-    -unity-background-scale-mode: scale-and-crop;
-    background-color: rgba(255, 255, 255, 0.13);
-    border-left-color: rgba(255, 255, 255, 0.94);
-    border-right-color: rgba(255, 255, 255, 0.94);
-    border-top-color: rgba(255, 255, 255, 0.94);
-    border-bottom-color: rgba(255, 255, 255, 0.94);
-    border-left-width: 5px;
-    border-right-width: 5px;
-    border-top-width: 5px;
-    border-bottom-width: 5px;
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
-    flex-direction: row;
-    flex-wrap: wrap;
     width: 900px;
     height: 900px;
-    flex-shrink: 0;
+}
+
+.puzzle--piece {
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-and-crop;
+    border-left-color: rgb(14, 0, 0);
+    border-right-color: rgb(14, 0, 0);
+    border-top-color: rgb(14, 0, 0);
+    border-bottom-color: rgb(14, 0, 0);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+}
+
+.puzzle--piece:hover {
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-and-crop;
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    border-left-color: rgb(0, 0, 0);
+}
+
+.modal--background {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.84);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal--window {
+    width: 75%;
+    height: 45%;
+    background-color: rgb(33, 33, 33);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.modal--header {
+    height: 48px;
+    margin-left: 12px;
+    margin-right: 12px;
+    flex-direction: row-reverse;
+}
+
+.modal--close-button {
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal--close-button:hover {
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.25);
 }

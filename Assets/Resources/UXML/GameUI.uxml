@@ -2,6 +2,19 @@
     <Style src="project://database/Assets/Resources/USS/SlidingPuzle.uss?fileID=7433441132597879392&amp;guid=434dde5fcca80461687f025857cde03c&amp;type=3#SlidingPuzle" />
     <ui:VisualElement name="background" class="puzzle--background" style="align-items: center;">
         <ui:VisualElement name="puzzle-preview" style="position: absolute; width: 300px; height: 300px; left: 68px; -unity-background-scale-mode: scale-and-crop; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px;" />
-        <ui:VisualElement name="puzzle-container" class="puzzle--container" />
+        <ui:VisualElement name="puzzle-container" class="puzzle--container" style="background-color: rgba(255, 255, 255, 0.11);" />
+        <ui:VisualElement name="win--header" style="position: absolute; width: 100%; top: 1px; height: 75px; justify-content: center;">
+            <ui:Label tabindex="-1" text="Congratulations, it took you {time) to solve this puzzle!" display-tooltip-when-elided="true" name="time--label" style="color: rgb(255, 255, 255); font-size: 20px; -unity-font-style: bold; align-items: center; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="position: absolute; width: 325px; left: 1525px; bottom: 36%; height: 502px; background-color: rgba(255, 255, 255, 0.1); border-top-left-radius: 16px; border-bottom-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px;">
+            <ui:GroupBox style="margin-bottom: 19px;">
+                <ui:Label tabindex="-1" text="Puzzle Settings" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255); font-size: 20px; -unity-font-style: bold;" />
+            </ui:GroupBox>
+            <ui:VisualElement name="random--preview" style="background-color: rgba(255, 255, 255, 0.11); width: 200px; height: 200px; align-self: center; border-top-left-radius: 16px; border-bottom-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; -unity-background-scale-mode: scale-and-crop;" />
+            <ui:Button tabindex="-1" text="New Random Image" display-tooltip-when-elided="true" name="random--button" style="width: 200px; align-self: center; margin-top: 8px; border-top-left-radius: 19px; border-bottom-left-radius: 19px; border-top-right-radius: 19px; border-bottom-right-radius: 19px; background-color: rgb(231, 97, 47); color: rgb(255, 255, 255); font-size: 16px; -unity-font-style: bold;" />
+            <ui:Label tabindex="-1" text="Difficulty" display-tooltip-when-elided="true" style="font-size: 18px; color: rgb(255, 255, 255); -unity-text-align: middle-center; margin-top: 16px; -unity-font-style: bold;" />
+            <ui:SliderInt low-value="2" high-value="30" value="3" name="difficulty--slider" style="width: 200px; align-self: center;" />
+            <ui:Label tabindex="-1" text="3 x 3" display-tooltip-when-elided="true" name="difficulty--label" style="font-size: 18px; color: rgb(255, 255, 255); -unity-text-align: middle-center; margin-top: 10px; -unity-font-style: bold;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

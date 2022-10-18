@@ -72,7 +72,6 @@ public class PuzzleSettings
 
     private void ShufflePieces()
     {
-        Debug.Log("called");
         List<Vector2> possiblePositions = new List<Vector2>();
         foreach (var piece in PuzzlePieces)
         {
