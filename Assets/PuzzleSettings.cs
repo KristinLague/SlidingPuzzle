@@ -9,6 +9,7 @@ public class PuzzleSettings
     
     public int PiecesAmount;
     public List<PuzzlePiece> PuzzlePieces { get; private set; }
+    public PuzzlePiece EmptyTile { get; private set; }
 
     public PuzzleSettings(Texture2D _sourceImage, int _amount)
     {
@@ -18,9 +19,27 @@ public class PuzzleSettings
         MakePuzzle();
     }
 
+    public PuzzlePiece FindPieceByPosition(Vector2 tilePos)
+    {
+        return PuzzlePieces.Find(x => x.CurrentPosition == tilePos);
+    }
+
+    public bool IsNextToEmptyTile(PuzzlePiece piece)
+    {
+        bool isHorizontal = Mathf.Abs(piece.CurrentPosition.x - EmptyTile.CurrentPosition.x) == piece.Width && Mathf.Abs(piece.CurrentPosition.y - EmptyTile.CurrentPosition.y) < piece.Height;
+        bool isVertical = Mathf.Abs(piece.CurrentPosition.y - EmptyTile.CurrentPosition.y) == piece.Height &&  Mathf.Abs(piece.CurrentPosition.x - EmptyTile.CurrentPosition.x) < piece.Width;
+        return isHorizontal ^ isVertical;
+    }
+
+    public void SwapWithEmptyTile(PuzzlePiece piece)
+    {
+        Vector2 temp = piece.CurrentPosition;
+        piece.CurrentPosition = EmptyTile.CurrentPosition;
+        EmptyTile.CurrentPosition = temp;
+    }
+
     private void MakePuzzle()
     {
-        Debug.Log("calledc");
         PuzzlePieces = new List<PuzzlePiece>(PiecesAmount - 1);
 
         int rows = PiecesAmount;
@@ -33,7 +52,6 @@ public class PuzzleSettings
         {
             for (int r = 0; r < rows; r++)
             {
-                //Skip the last piece since one tile is empty
                 bool isEmpty = (setIndex == (PiecesAmount * PiecesAmount) - 1);
                     
                 var leftPos = r * widthHeight;
@@ -44,9 +62,12 @@ public class PuzzleSettings
                 m2Texture.SetPixels (col);
                 m2Texture.Apply ();
                 
-                //Sprite mySprity = Sprite.Create(SourceImage,new Rect(0,0,100,100),new Vector2(0,0),100);
                 PuzzlePiece piece = new PuzzlePiece(new Vector2(leftPos,bottomPos), isEmpty ? null : m2Texture, widthHeight,widthHeight, isEmpty);
                 PuzzlePieces.Add(piece);
+
+                if (isEmpty)
+                    EmptyTile = piece;
+                
                 setIndex++;
             }
         }
