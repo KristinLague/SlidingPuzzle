@@ -106,6 +106,7 @@ public class Puzzle
             puzzleContainer.Add(template);
         }
     }
+    
 
     private void TryMovePiece(VisualElement tile, PuzzlePiece piece)
     {

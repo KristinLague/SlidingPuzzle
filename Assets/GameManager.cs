@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         puzzleUI = new Puzzle(UIDoc.rootVisualElement);
         random = new System.Random();
-        seed = random.Next(0, 10000);
+        seed = random.Next(0, Int32.MaxValue);
         StartNewPuzzle();
         
         puzzleUI.OnGameWon += PuzzleUIOnOnGameWon;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     public void SetRandomImage(VisualElement visualElement)
     {
-        seed = random.Next(0, 10000);
+        seed = random.Next(0, Int32.MaxValue);
         StartCoroutine(GetAndSetRandomImage(visualElement, seed));
     }
 

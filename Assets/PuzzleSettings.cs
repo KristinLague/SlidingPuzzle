@@ -19,6 +19,40 @@ public class PuzzleSettings
         MakePuzzle();
     }
 
+    public PuzzlePiece FindTileNextToEmpty()
+    {
+        PuzzlePiece piece = null;
+        int random = Random.Range(0, 100);
+
+        switch (random)
+        {
+            case <= 25:
+                //Up 
+                Vector2 up = new Vector2(EmptyTile.CurrentPosition.x, EmptyTile.CurrentPosition.y + EmptyTile.Height);
+                piece = GetPieceByPosition(up);
+                break;
+            case <= 50:
+                Vector2 right = new Vector2(EmptyTile.CurrentPosition.x + EmptyTile.Width, EmptyTile.CurrentPosition.y);
+                piece = GetPieceByPosition(right);
+                break;
+            case <= 75:
+                Vector2 left = new Vector2(EmptyTile.CurrentPosition.x - EmptyTile.Width, EmptyTile.CurrentPosition.y);
+                piece = GetPieceByPosition(left);
+                break;
+            default:
+                Vector2 down = new Vector2(EmptyTile.CurrentPosition.x, EmptyTile.CurrentPosition.y - EmptyTile.Height);
+                piece = GetPieceByPosition(down);
+                break;
+        }
+
+        return piece;
+    }
+
+    private PuzzlePiece GetPieceByPosition(Vector2 pos)
+    {
+        return PuzzlePieces.Find(x => x.CurrentPosition == pos);
+    }
+
     public bool IsNextToEmptyTile(PuzzlePiece piece)
     {
         bool isHorizontal = Mathf.Abs(piece.CurrentPosition.x - EmptyTile.CurrentPosition.x) == piece.Width && Mathf.Abs(piece.CurrentPosition.y - EmptyTile.CurrentPosition.y) < piece.Height;
@@ -28,6 +62,9 @@ public class PuzzleSettings
 
     public void SwapWithEmptyTile(PuzzlePiece piece)
     {
+        if(piece == null)
+            return;
+        
         Vector2 temp = piece.CurrentPosition;
         piece.CurrentPosition = EmptyTile.CurrentPosition;
         EmptyTile.CurrentPosition = temp;
@@ -66,25 +103,16 @@ public class PuzzleSettings
                 setIndex++;
             }
         }
-        
-        ShufflePieces();
-    }
 
+        ShufflePieces();
+
+    }
+    
     private void ShufflePieces()
     {
-        List<Vector2> possiblePositions = new List<Vector2>();
-        foreach (var piece in PuzzlePieces)
+        for (int i = 0; i < PiecesAmount * 50; i++)
         {
-            if (!piece.IsEmpty)
-                possiblePositions.Add(piece.SolvedPosition);
-        }
-
-        Debug.Log(PuzzlePieces.Count);
-        Shuffle(possiblePositions);
-        for(int i = 0; i < PuzzlePieces.Count; i++)
-        {
-            if(!PuzzlePieces[i].IsEmpty)
-                PuzzlePieces[i].CurrentPosition = possiblePositions[i];
+            SwapWithEmptyTile(FindTileNextToEmpty());
         }
     }
 
@@ -97,18 +125,5 @@ public class PuzzleSettings
         }
 
         return true;
-    }
-    
-    private void Shuffle<T>(IList<T> values)
-    {
-        System.Random rng = new System.Random();
-
-        for (int i = values.Count - 1; i > 0; i--)
-        {
-            int k = rng.Next(i + 1);
-            T value = values[k];
-            values[k] = values[i];
-            values[i] = value;
-        }
     }
 }
