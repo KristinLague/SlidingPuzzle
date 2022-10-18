@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PuzzlePiece
 {
+   public bool IsEmpty;
    public int Width;
    public int Height;
    public Vector2 SolvedPosition;
@@ -9,12 +10,13 @@ public class PuzzlePiece
    
    public Texture2D PieceImage;
 
-   public PuzzlePiece(Vector2 _solvedPos, Vector2 _currentPos, Texture2D _image)
+   public PuzzlePiece(Vector2 _solvedPos, Texture2D _image, int _height, int _width, bool _isEmpty = false)
    {
       SolvedPosition = _solvedPos;
-      CurrentPosition = _currentPos;
+      CurrentPosition = _solvedPos;
       PieceImage = _image;
-      Width = _image.width;
-      Height = _image.height;
+      IsEmpty = _isEmpty;
+      Width = _width;
+      Height = _height;
    }
 }

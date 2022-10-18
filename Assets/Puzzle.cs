@@ -31,7 +31,8 @@ public class Puzzle
             template.style.backgroundImage = piece.PieceImage;
             template.style.position = Position.Absolute;
             template.style.left = piece.CurrentPosition.x;
-            template.style.top = piece.CurrentPosition.y;
+            template.style.bottom = piece.CurrentPosition.y;
+            template.name = puzzle.PuzzlePieces.IndexOf(piece).ToString();
             puzzleContainer.Add(template);
         }
     }

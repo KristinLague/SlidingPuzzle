@@ -20,6 +20,7 @@ public class PuzzleSettings
 
     private void MakePuzzle()
     {
+        Debug.Log("calledc");
         PuzzlePieces = new List<PuzzlePiece>(PiecesAmount - 1);
 
         int rows = PiecesAmount;
@@ -28,25 +29,60 @@ public class PuzzleSettings
         var widthHeight = 900 / PiecesAmount;
 
         int setIndex = 0;
-        for (int r = 0; r < rows; r++)
+        for (int c = 0; c < colums; c++)
         {
-            for (int c = 0; c < colums; c++)
+            for (int r = 0; r < rows; r++)
             {
                 //Skip the last piece since one tile is empty
-                if (setIndex == (PiecesAmount * PiecesAmount) - 1)
-                    return;
+                bool isEmpty = (setIndex == (PiecesAmount * PiecesAmount) - 1);
+                    
                 var leftPos = r * widthHeight;
-                var topPos = c * widthHeight;
-                Color[] col = SourceImage.GetPixels (leftPos, topPos, widthHeight, widthHeight);
+                var bottomPos = c * widthHeight;
+                
+                Color[] col = SourceImage.GetPixels (leftPos, bottomPos, widthHeight, widthHeight);
                 Texture2D m2Texture = new Texture2D (widthHeight, widthHeight);
                 m2Texture.SetPixels (col);
                 m2Texture.Apply ();
                 
                 //Sprite mySprity = Sprite.Create(SourceImage,new Rect(0,0,100,100),new Vector2(0,0),100);
-                PuzzlePiece piece = new PuzzlePiece(new Vector2(leftPos,topPos), new Vector2(leftPos,topPos), m2Texture);
+                PuzzlePiece piece = new PuzzlePiece(new Vector2(leftPos,bottomPos), isEmpty ? null : m2Texture, widthHeight,widthHeight, isEmpty);
                 PuzzlePieces.Add(piece);
                 setIndex++;
             }
+        }
+        
+        ShufflePieces();
+    }
+
+    private void ShufflePieces()
+    {
+        Debug.Log("called");
+        List<Vector2> possiblePositions = new List<Vector2>();
+        foreach (var piece in PuzzlePieces)
+        {
+            if (!piece.IsEmpty)
+                possiblePositions.Add(piece.SolvedPosition);
+        }
+
+        Debug.Log(PuzzlePieces.Count);
+        Shuffle(possiblePositions);
+        for(int i = 0; i < PuzzlePieces.Count; i++)
+        {
+            if(!PuzzlePieces[i].IsEmpty)
+                PuzzlePieces[i].CurrentPosition = possiblePositions[i];
+        }
+    }
+    
+    private void Shuffle<T>(IList<T> values)
+    {
+        System.Random rng = new System.Random();
+
+        for (int i = values.Count - 1; i > 0; i--)
+        {
+            int k = rng.Next(i + 1);
+            T value = values[k];
+            values[k] = values[i];
+            values[i] = value;
         }
     }
 }
