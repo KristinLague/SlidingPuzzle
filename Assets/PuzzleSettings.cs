@@ -6,7 +6,7 @@ public class PuzzleSettings
 {
     public Texture2D SourceImage;
     public Texture2D ReferenceImage;
-    
+
     public int PiecesAmount;
     public List<PuzzlePiece> PuzzlePieces { get; private set; }
     public PuzzlePiece EmptyTile { get; private set; }
@@ -17,11 +17,6 @@ public class PuzzleSettings
         PiecesAmount = _amount;
 
         MakePuzzle();
-    }
-
-    public PuzzlePiece FindPieceByPosition(Vector2 tilePos)
-    {
-        return PuzzlePieces.Find(x => x.CurrentPosition == tilePos);
     }
 
     public bool IsNextToEmptyTile(PuzzlePiece piece)
@@ -92,6 +87,17 @@ public class PuzzleSettings
             if(!PuzzlePieces[i].IsEmpty)
                 PuzzlePieces[i].CurrentPosition = possiblePositions[i];
         }
+    }
+
+    public bool HasWon()
+    {
+        foreach (var piece in PuzzlePieces)
+        {
+            if (piece.CurrentPosition != piece.SolvedPosition)
+                return false;
+        }
+
+        return true;
     }
     
     private void Shuffle<T>(IList<T> values)

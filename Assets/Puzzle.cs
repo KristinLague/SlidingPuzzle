@@ -8,6 +8,7 @@ public class Puzzle
     private VisualElement root;
     private PuzzleSettings puzzle;
     private VisualElement puzzleContainer;
+    private VisualElement puzzlePreview;
     
     private readonly VisualTreeAsset puzzlePieceTemplate;
     private UITKEventHelper eventHelper;
@@ -26,6 +27,9 @@ public class Puzzle
     {
         eventHelper = new UITKEventHelper();
         puzzleContainer = root.Q<VisualElement>("puzzle-container");
+        puzzlePreview = root.Q<VisualElement>("puzzle-preview");
+
+        puzzlePreview.style.backgroundImage = puzzle.SourceImage;
         //puzzleContainer.style.backgroundImage = puzzle.PuzzlePieces[0].PieceImage;
         foreach (var piece in puzzle.PuzzlePieces)
         {
@@ -62,6 +66,11 @@ public class Puzzle
             
             emptyTile.style.left = puzzle.EmptyTile.CurrentPosition.x;
             emptyTile.style.bottom = puzzle.EmptyTile.CurrentPosition.y;
+
+            if (puzzle.HasWon())
+            {
+                Debug.Log("PUZZLE COMPLETE");
+            }
         }
         
     }
